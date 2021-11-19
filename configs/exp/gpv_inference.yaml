@@ -1,7 +1,7 @@
 exp_name: gpv_inference
-output_dir: path_to_output_dir # e.g. $HOME/Data/gpv_output_dir
+output_dir: output # path_to_output_dir: e.g. $HOME/Data/gpv_output_dir
 exp_dir: ${output_dir}/${exp_name}
-data_dir: path_to_data_dir # e.g $HOME/Data/gpv_data_dir
+data_dir: gpv_data # path_to_data_dir: e.g $HOME/Data/gpv_data_dir
 ckpt: ${output_dir}/gpv_coco/ckpts/model.pth
 
 hydra:
@@ -13,7 +13,7 @@ defaults:
   - learning_datasets: vqa
 
 model:
-  pretr_detr: ${data_dir}/detr/detr_coco_sce.pth 
+  pretr_detr: ${data_dir}/detr/detr_coco.pth
   vocab: ${data_dir}/learning_phase_data/vocab/vocab.json
   vocab_embed: ${data_dir}/learning_phase_data/vocab/vocab_embed.npy
   max_pos_enc_len: 30
@@ -78,13 +78,13 @@ losses:
     pad_idx: null
     loss_wts:
       loss_caption: 5e-2
-  
+
   VqaLoss:
     name: vqa_criterion
     pad_idx: null
     loss_wts:
       loss_vqa: 1
-  
+
   ClsLoss:
     name: cls_criterion
     pad_idx: null
