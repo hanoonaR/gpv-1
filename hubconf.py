@@ -1,6 +1,7 @@
 from hydra.experimental import compose, initialize
 import torch
 from exp.gpv.models.gpv import GPV
+from pathlib import Path
 
 dependencies = ["torch", "torchvision"]
 
@@ -8,6 +9,8 @@ dependencies = ["torch", "torchvision"]
 def gpv1(pretrained=False, checkpoints_path=""):
     with initialize(config_path='configs', job_name='inference'):
         cfg = compose(config_name='exp/gpv_inference')
+    path = Path(__file__).parent.absolute()
+    cfg.data_dir = f"{path}/gpv_data"
     model = GPV(cfg.model)
     if pretrained:
         loaded_dict = torch.hub.load_state_dict_from_url(
